@@ -1,0 +1,11 @@
+version: '3'
+
+services: 
+   nest-database:
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/.mysql:/var/lib/mysql
+    env_file:
+      - .env
+    container_name: nest-database

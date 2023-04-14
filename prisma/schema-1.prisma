@@ -1,0 +1,802 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_MYSQL_01")
+}
+
+model acoes_de_servidores {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id    Int
+  servidor_nome  String    @db.VarChar(255)
+  tipo_operacao  String    @db.VarChar(255)
+  tabela_afetada String    @db.VarChar(255)
+  acao           String    @db.Text
+  ip             String?   @db.VarChar(255)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model aluno_notas {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano        Int
+  aluno_id   Int
+  turma_id   Int
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+}
+
+model alunos {
+  id                              BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+  login_id                        Int
+  foto                            String?     @db.VarChar(800)
+  autorizar_uso_imagem            Boolean     @default(false)
+  matricula                       String?     @db.VarChar(255)
+  nome                            String      @db.VarChar(255)
+  sobrenome                       String?     @db.VarChar(255)
+  nome_mae                        String      @db.VarChar(255)
+  nome_pai                        String?     @db.VarChar(255)
+  nome_responsavel                String?     @db.VarChar(255)
+  alergico                        Boolean     @default(false)
+  tipo_alergia                    String?     @db.VarChar(255)
+  deficiencia                     Boolean     @default(false)
+  nee                             Boolean     @default(false)
+  qual_deficiencia                String?     @db.Text
+  nacionalidade                   String?     @db.VarChar(255)
+  naturalidade                    String?     @db.VarChar(255)
+  cor_raca                        String?     @default("NÃO DECLARADA") @db.VarChar(255)
+  tipo_sanguineo                  String?     @db.VarChar(255)
+  cpf                             String?     @db.VarChar(255)
+  rg                              String?     @db.VarChar(255)
+  rg_orgao_emissor                String?     @db.VarChar(255)
+  rg_data_missao                  String?     @db.VarChar(255)
+  rg_uf                           String?     @db.VarChar(255)
+  estado_civil                    String?     @db.VarChar(255)
+  certidao_nascimento             String?     @db.VarChar(255)
+  certidao_casamento              String?     @db.VarChar(255)
+  livro                           String?     @db.VarChar(255)
+  folha                           String?     @db.VarChar(255)
+  termo                           String?     @db.VarChar(255)
+  nascimento                      DateTime    @db.Date
+  sexo                            alunos_sexo @default(M)
+  observacao                      String?     @db.Text
+  transporte                      Boolean     @default(false)
+  qual_transporte                 String?     @db.VarChar(255)
+  dispositivo_com_acesso_internet Boolean     @default(true)
+  acesso_celular                  Boolean     @default(false)
+  acesso_computador               Boolean     @default(false)
+  acesso_tablet                   Boolean     @default(false)
+  acesso_outros                   Boolean     @default(false)
+  religiao                        String?     @db.VarChar(255)
+  freq_aula_religioso             Boolean     @default(false)
+  situacao                        Boolean     @default(true)
+  created_at                      DateTime?   @db.Timestamp(0)
+  updated_at                      DateTime?   @db.Timestamp(0)
+}
+
+model atv_complementares {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nota_config_id Int
+  periodo        Int
+  nome           String    @db.VarChar(255)
+  atividade      Int
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model avaliacaos {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nota_config_id Int
+  periodo        Int
+  avaliacao      Int
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model calendario_eventos {
+  id                    BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  calendario_letivos_id Int
+  tera_escola           Boolean   @default(false)
+  escola_id             String?   @db.VarChar(255)
+  data                  DateTime? @db.DateTime(0)
+  tipo_evento           String?   @db.VarChar(255)
+  created_at            DateTime? @db.Timestamp(0)
+  updated_at            DateTime? @db.Timestamp(0)
+}
+
+model calendario_letivos {
+  id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano               Int
+  nome              String    @default("Calendário Letivo") @db.VarChar(255)
+  b1_inicio         DateTime? @db.DateTime(0)
+  b1_final          DateTime? @db.DateTime(0)
+  colorpicker_1b    String    @default("2279e5") @db.VarChar(255)
+  b2_inicio         DateTime? @db.DateTime(0)
+  b2_final          DateTime? @db.DateTime(0)
+  colorpicker_2b    String    @default("2279e5") @db.VarChar(255)
+  b3_inicio         DateTime? @db.DateTime(0)
+  b3_final          DateTime? @db.DateTime(0)
+  colorpicker_3b    String    @default("2279e5") @db.VarChar(255)
+  b4_inicio         DateTime? @db.DateTime(0)
+  b4_final          DateTime? @db.DateTime(0)
+  colorpicker_4b    String    @default("2279e5") @db.VarChar(255)
+  fechar_calendario Boolean   @default(false)
+  situacao          Boolean   @default(true)
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+}
+
+model calendario_mes {
+  id                   BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  calendario_letivo_id Int       @default(0)
+  ano                  Int
+  mes                  String    @default("janeiro") @db.VarChar(255)
+  dia                  Int
+  dia_semana           String    @default("Domingo") @db.VarChar(255)
+  letivo               Boolean   @default(false)
+  created_at           DateTime? @db.Timestamp(0)
+  updated_at           DateTime? @db.Timestamp(0)
+}
+
+model calendario_segmentos {
+  id                   BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano                  Int
+  segmento_id          Int
+  calendario_letivo_id Int
+  created_at           DateTime? @db.Timestamp(0)
+  updated_at           DateTime? @db.Timestamp(0)
+}
+
+model comunicacao_servidores {
+  id                   BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id          Int
+  data                 DateTime  @db.DateTime(0)
+  setor_de_recebimento String?   @db.VarChar(255)
+  servidor_id_resposta Int       @default(0)
+  titulo               String?   @db.VarChar(255)
+  msg                  String?   @db.Text
+  quem_abriu_msg       String?   @db.VarChar(255)
+  msg_aberta           Boolean   @default(false)
+  resposta_msg_id      String?   @db.VarChar(255)
+  resposta_msg         Boolean   @default(false)
+  ip                   String    @db.VarChar(255)
+  ip_quem_abriu_msg    String?   @db.VarChar(255)
+  created_at           DateTime? @db.Timestamp(0)
+  updated_at           DateTime? @db.Timestamp(0)
+}
+
+model config_sistemas {
+  id                   BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  fechamento           String    @default("Mensalmente") @db.VarChar(255)
+  barralateral_cor     String    @default("#ffffff") @db.VarChar(255)
+  barralateral_cortext String    @default("#000000") @db.VarChar(255)
+  created_at           DateTime? @db.Timestamp(0)
+  updated_at           DateTime? @db.Timestamp(0)
+}
+
+model configuracao_logos {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  tipo       Int       @default(0)
+  logo       String?   @db.VarChar(600)
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+}
+
+model configuracao_notas_segmentos {
+  id                        BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  configuracao_segmentos_id Int
+  simulado                  Int       @default(20)
+  atividades                Int       @default(30)
+  avaliacao                 Int       @default(50)
+  media                     Int       @default(50)
+  notas_substituir_recup    Int       @default(1)
+  recuperacao_bimestral     Boolean   @default(false)
+  recuperacao_nota_b1       Int       @default(0)
+  recuperacao_nota_b2       Int       @default(0)
+  recuperacao_nota_b3       Int       @default(0)
+  recuperacao_nota_b4       Int       @default(0)
+  recuperacao_semestral     Boolean   @default(false)
+  recuperacao_nota_s1       Int       @default(0)
+  recuperacao_nota_s2       Int       @default(0)
+  recuperacao_final         Boolean   @default(false)
+  recuperacao_nota_final    Int       @default(0)
+  created_at                DateTime? @db.Timestamp(0)
+  updated_at                DateTime? @db.Timestamp(0)
+}
+
+model configuracao_segmentos {
+  id                         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  configuracaos_id           Int
+  tipo_segmento              Int
+  eja2                       Int       @default(0)
+  tera_simulado              Boolean   @default(true)
+  tera_atividades            Boolean   @default(true)
+  tera_atividades_extra      Boolean   @default(false)
+  tera_avaliacao             Boolean   @default(true)
+  tera_recuperacao           Boolean   @default(true)
+  simulado_nome_exib         String    @default("Simulado") @db.VarChar(255)
+  atividades_nome_exib       String    @default("Atividades Diversificadas") @db.VarChar(255)
+  atividades_extra_nome_exib String    @default("Atividades Extras") @db.VarChar(255)
+  avaliacao_nome_exib        String    @default("Avaliação") @db.VarChar(255)
+  porcentagem_falta          Int       @default(75)
+  created_at                 DateTime? @db.Timestamp(0)
+  updated_at                 DateTime? @db.Timestamp(0)
+}
+
+model configuracaos {
+  id                     BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano                    Int
+  tipo_ano               String    @default("Bimestre") @db.VarChar(255)
+  tipo_ano_nome_exib     String    @default("Período") @db.VarChar(255)
+  data_inicial_matricula DateTime? @db.DateTime(0)
+  data_final_matricula   DateTime? @db.DateTime(0)
+  autorizado             Int       @default(0)
+  situacao               Int       @default(1)
+  created_at             DateTime? @db.Timestamp(0)
+  updated_at             DateTime? @db.Timestamp(0)
+}
+
+model coordenadores {
+  id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id  Int
+  ano          String    @db.VarChar(255)
+  escolas      String    @db.VarChar(255)
+  pre_escola   Boolean   @default(false)
+  fundamental1 Boolean   @default(false)
+  fundamental2 Boolean   @default(false)
+  ern          Boolean   @default(false)
+  eja1         Boolean   @default(false)
+  eja2         Boolean   @default(false)
+  situacao     Boolean   @default(true)
+  created_at   DateTime? @db.Timestamp(0)
+  updated_at   DateTime? @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model dependencia_disciplinas {
+  id                BigInt    @db.UnsignedBigInt
+  data_reuniao      DateTime  @db.DateTime(0)
+  ano               Int
+  disciplina_id     Int
+  aluno_id          Int
+  passou_disciplina Boolean   @default(false)
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+
+  @@ignore
+}
+
+model diretores {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id Int
+  ano         Int
+  escola      Int
+  situacao    Boolean   @default(true)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model disciplinas {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nome          String    @db.VarChar(255)
+  carga_horaria Int       @default(20)
+  status        Boolean   @default(true)
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model documento_auxiliar {
+  id         BigInt    @db.UnsignedBigInt
+  nome       String    @db.VarChar(255)
+  descricao  String?   @db.Text
+  aluno_id   Int
+  path       String    @db.VarChar(600)
+  data       DateTime  @db.DateTime(0)
+  local      String?   @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+
+  @@ignore
+}
+
+model enderecos {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  login_id    String    @db.VarChar(255)
+  servidor_id String?   @db.VarChar(100)
+  aluno_id    String?   @db.VarChar(100)
+  aluno       String?   @db.VarChar(255)
+  distrito    String?   @db.VarChar(255)
+  logradouro  String?   @db.VarChar(255)
+  numero      String?   @db.VarChar(255)
+  bairro      String?   @db.VarChar(255)
+  complemento String?   @db.VarChar(255)
+  cidade      String?   @db.VarChar(255)
+  estado      String?   @db.VarChar(255)
+  cep         String?   @db.VarChar(255)
+  latitude    Float?
+  longitude   Float?
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model escolas {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  codigo_INEP String?   @db.VarChar(255)
+  nome        String    @db.VarChar(255)
+  email       String?   @db.VarChar(255)
+  telefone    String?   @db.VarChar(255)
+  cnpj        String?   @db.VarChar(255)
+  distrito    String?   @db.VarChar(255)
+  logradouro  String?   @db.VarChar(255)
+  numero      String?   @db.VarChar(255)
+  bairro      String?   @db.VarChar(255)
+  complemento String?   @db.VarChar(255)
+  cidade      String?   @db.VarChar(255)
+  estado      String?   @db.VarChar(255)
+  cep         String?   @db.VarChar(255)
+  latitude    Float?
+  longitude   Float?
+  situacao    Boolean   @default(true)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model failed_jobs {
+  id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  uuid       String   @db.VarChar(255)
+  connection String   @db.Text
+  queue      String   @db.Text
+  payload    String   @db.LongText
+  exception  String   @db.LongText
+  failed_at  DateTime @default(now()) @db.Timestamp(0)
+}
+
+model funcaos {
+  id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nome         String    @db.VarChar(255)
+  permissao_id Int
+  created_at   DateTime? @db.Timestamp(0)
+  updated_at   DateTime? @db.Timestamp(0)
+}
+
+model history_aluno_serie {
+  id                     BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  aluno_id               Int
+  ano                    Int
+  escola_id              Int
+  segmento_id            Int
+  segmento_nome          String    @db.VarChar(255)
+  serie_id               Int
+  serie_nome             String    @db.VarChar(255)
+  turma_id               Int
+  turma_aluno_eventos_id String?   @db.VarChar(255)
+  created_at             DateTime? @db.Timestamp(0)
+  updated_at             DateTime? @db.Timestamp(0)
+}
+
+model horario_trabalhos {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano         String    @db.VarChar(255)
+  servidor_id Int
+  escola_id   Int
+  turno       String    @db.VarChar(255)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model liberacao_diarios {
+  id               BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  solicitante      Int
+  data             DateTime  @db.DateTime(0)
+  modulo           String    @db.VarChar(255)
+  periodo_semestre String?   @db.VarChar(255)
+  mes_liberado     String?   @db.VarChar(255)
+  qdt_dias         Int       @default(2)
+  turma_id         Int
+  servidor_id      Int
+  status           Boolean   @default(true)
+  ip               String    @db.VarChar(255)
+  created_at       DateTime? @db.Timestamp(0)
+  updated_at       DateTime? @db.Timestamp(0)
+}
+
+model login {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  email          String    @db.VarChar(255)
+  password       String    @db.VarChar(255)
+  funcao         Int       @default(5)
+  status         Boolean   @default(true)
+  token          String    @default(dbgenerated("(uuid())")) @db.Char(36)
+  remember_token String?   @db.VarChar(100)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement()) @db.UnsignedInt
+  migration String @db.VarChar(255)
+  batch     Int
+}
+
+model nec_educ_especial {
+  id                     BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  aluno_id               Int
+  nota_config_id         Int
+  tipo                   Int       @default(1)
+  periodo                Int
+  ano                    Int
+  suporte                Boolean   @default(false)
+  compreensao            Boolean   @default(false)
+  metodologia_utilizada  String?   @db.Text
+  diagnostico_pedagogico String?   @db.Text
+  observacao             String?   @db.Text
+  created_at             DateTime? @db.Timestamp(0)
+  updated_at             DateTime? @db.Timestamp(0)
+}
+
+model nota_completa {
+  id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  aluno_notas_id    Int
+  disciplina_id     Int
+  periodo_1         String?   @db.VarChar(255)
+  periodo_2         String?   @db.VarChar(255)
+  periodo_3         String?   @db.VarChar(255)
+  periodo_4         String?   @db.VarChar(255)
+  recuperacao_final String?   @db.VarChar(255)
+  media_final       String?   @db.VarChar(255)
+  passou            Boolean   @default(false)
+  dependencia       Int       @default(0)
+  transferido       Int       @default(0)
+  evadido           Int       @default(0)
+  faleceu           Int       @default(0)
+  mudou_de_turma    Int       @default(0)
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+}
+
+model nota_config {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  aluno_id      Int
+  disciplina_id Int
+  ano           Int
+  turma_id      Int
+  p1            Boolean   @default(false)
+  p2            Boolean   @default(false)
+  p3            Boolean   @default(false)
+  p4            Boolean   @default(false)
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+model padrao_disciplinas_turma {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  segmento_id Int
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model padrao_disciplinas_turma_disciplina {
+  id                                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  padrao_disciplinas_turma_serie_id Int       @default(0)
+  disciplina_id                     Int
+  created_at                        DateTime? @db.Timestamp(0)
+  updated_at                        DateTime? @db.Timestamp(0)
+}
+
+model padrao_disciplinas_turma_serie {
+  id                          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  padrao_disciplinas_turma_id Int       @default(0)
+  serie_id                    Int
+  created_at                  DateTime? @db.Timestamp(0)
+  updated_at                  DateTime? @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model password_resets {
+  email      String    @db.VarChar(255)
+  token      String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+
+  @@ignore
+}
+
+model perguntas_creche {
+  id               BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano              Int
+  serie_id         Int
+  pergunta         String    @db.Text
+  multipla_escolha Boolean   @default(true)
+  respondido       Boolean   @default(false)
+  created_at       DateTime? @db.Timestamp(0)
+  updated_at       DateTime? @db.Timestamp(0)
+}
+
+model permissao_acaos {
+  id                  BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  funcao_id           Int
+  permissao_modulo_id Int
+  nivel               Int       @default(1)
+  created_at          DateTime? @db.Timestamp(0)
+  updated_at          DateTime? @db.Timestamp(0)
+}
+
+model permissao_modulos {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nome       String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+}
+
+model permissaos_especial {
+  id                  BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  funcao_id           Int
+  login_id            Int
+  permissao_modulo_id Int
+  visualizar          Int
+  cadastrar           Int
+  editar              Int
+  deletar             Int
+  created_at          DateTime? @db.Timestamp(0)
+  updated_at          DateTime? @db.Timestamp(0)
+}
+
+model personal_access_tokens {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  tokenable_type String    @db.VarChar(255)
+  tokenable_id   BigInt    @db.UnsignedBigInt
+  name           String    @db.VarChar(255)
+  token          String    @db.VarChar(64)
+  abilities      String?   @db.Text
+  last_used_at   DateTime? @db.Timestamp(0)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model planeja_pedagogico {
+  id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  segmento_id       Int
+  serie_id          Int
+  disciplina_id     Int
+  ano               Int
+  periodo1_conteudo String?   @db.Text
+  periodo2_conteudo String?   @db.Text
+  periodo3_conteudo String?   @db.Text
+  periodo4_conteudo String?   @db.Text
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+}
+
+model planeja_prof {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano           Int
+  turma_id      Int
+  professor_id  Int
+  disciplina_id Int
+  texto         String?   @db.Text
+  dia           Int
+  mes           Int
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+model presenca_dia_aluno {
+  id                    BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  escola_id             Int
+  turma_id              Int
+  segmento_id           Int
+  serie_id              Int
+  professor_id          Int
+  disciplina_id         Int
+  aluno_id              Int
+  data                  DateTime  @db.DateTime(0)
+  presenca              Boolean   @default(false)
+  justificada_falta     Boolean   @default(false)
+  justificacao_conteudo String?   @db.Text
+  created_at            DateTime? @db.Timestamp(0)
+  updated_at            DateTime? @db.Timestamp(0)
+}
+
+model professores {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id Int
+  ano         String    @db.VarChar(255)
+  situacao    Boolean   @default(true)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model professores_especialidades {
+  id                         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  servidor_id                Int
+  segmento_id                Int
+  disciplina_id              Int       @default(0)
+  fund1_mais_de_um_professor Int       @default(0)
+  created_at                 DateTime? @db.Timestamp(0)
+  updated_at                 DateTime? @db.Timestamp(0)
+}
+
+model qdt_presenca_ensinos {
+  id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  segmento_id       Int
+  presenca_infinita Boolean   @default(true)
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+}
+
+model recuperacao {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nota_config_id Int
+  periodo        Int
+  recuperacao    Int
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model registrar_tokens {
+  id         BigInt    @db.UnsignedBigInt
+  login_id   Int
+  token      String    @db.Char(36)
+  fcm        String    @db.VarChar(255)
+  os         String    @db.VarChar(255)
+  modelo     String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+
+  @@ignore
+}
+
+model respostas_creche {
+  id                  BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano                 Int
+  perguntas_creche_id Int
+  aluno_id            Int
+  turma_id            Int
+  resposta_escolha    String?   @db.Text
+  resposta_objetiva   Boolean   @default(false)
+  created_at          DateTime? @db.Timestamp(0)
+  updated_at          DateTime? @db.Timestamp(0)
+}
+
+model segmento_escolar {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nome       String    @db.VarChar(255)
+  tipo       Int       @default(1)
+  status     Boolean   @default(true)
+  created_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+}
+
+model series {
+  id                          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nome                        String    @db.VarChar(255)
+  segmento_id                 Int
+  tipo                        Int       @default(1)
+  situacao                    Boolean   @default(true)
+  possui_mais_de_um_professor Int       @default(0)
+  created_at                  DateTime? @db.Timestamp(0)
+  updated_at                  DateTime? @db.Timestamp(0)
+}
+
+model servidor_afastado {
+  id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano          String    @db.VarChar(255)
+  servidor_id  Int
+  motivo       String    @db.VarChar(255)
+  quanto_tempo String    @db.VarChar(255)
+  situacao     Boolean   @default(true)
+  created_at   DateTime? @db.Timestamp(0)
+  updated_at   DateTime? @db.Timestamp(0)
+}
+
+model servidores {
+  id                  BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  nome                String          @db.VarChar(255)
+  sobrenome           String?         @db.VarChar(255)
+  login_id            String          @db.VarChar(255)
+  foto                String?         @db.VarChar(800)
+  matricula           String?         @db.VarChar(255)
+  cpf                 String?         @db.VarChar(255)
+  escolaridade        String?         @db.VarChar(255)
+  sexo                servidores_sexo @default(M)
+  horario_trabalho_id String?         @db.VarChar(255)
+  afastado            Boolean         @default(false)
+  deficiencia         Boolean         @default(false)
+  qual_deficiencia    String?         @db.Text
+  observacao          String?         @db.Text
+  situacao            Boolean         @default(true)
+  created_at          DateTime?       @db.Timestamp(0)
+  updated_at          DateTime?       @db.Timestamp(0)
+}
+
+model simulados {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  nota_config_id Int
+  periodo        Int
+  nome           String    @db.VarChar(255)
+  simulado       Int
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+}
+
+model telefones {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  login_id      Int
+  servidor_id   String?   @db.VarChar(100)
+  aluno_id      String?   @db.VarChar(100)
+  identificador String?   @db.VarChar(255)
+  telefone      BigInt
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+model turma_aluno_eventos {
+  id              BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano             Int
+  turma_id        Int
+  aluno_id        Int
+  tipoEvento      String    @db.VarChar(255)
+  data_ocorrencia DateTime  @default(dbgenerated("('1500-01-01 00:00:00')")) @db.DateTime(0)
+  turma_id_old    String?   @db.VarChar(255)
+  created_at      DateTime? @db.Timestamp(0)
+  updated_at      DateTime? @db.Timestamp(0)
+}
+
+model turma_alunos {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  turma_id    Int
+  aluno_id    Int
+  nome        String    @db.VarChar(255)
+  ano         Int
+  transferido Boolean   @default(false)
+  especial    Boolean   @default(false)
+  ativa       Boolean   @default(true)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+model turma_disciplinas {
+  id            BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  turma_id      Int
+  disciplina_id Int
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+model turma_professores {
+  id                  BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  turma_id            Int
+  professor_id        Int
+  turma_disciplina_id Int
+  created_at          DateTime? @db.Timestamp(0)
+  updated_at          DateTime? @db.Timestamp(0)
+}
+
+model turmas {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  ano         Int
+  escola_id   Int
+  segmento_id Int
+  serie_id    Int
+  nome        String    @db.VarChar(255)
+  turno       String    @db.VarChar(255)
+  ativa       Boolean   @default(false)
+  situacao    Boolean   @default(true)
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+}
+
+enum servidores_sexo {
+  M
+  F
+  O
+}
+
+enum alunos_sexo {
+  M
+  F
+  O
+}
