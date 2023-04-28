@@ -2,6 +2,8 @@ import { SQL } from 'src/dtos/abstract';
 import {
   // IsBoolean,
   IsDate,
+  IsEmail,
+  IsEmpty,
   // IsDateString,
   // IsEnum,
   IsNotEmpty,
@@ -21,9 +23,16 @@ export class Student extends SQL {
   @IsNotEmpty()
   name: string;
 
-  @IsDate()
-  @Type(() => Date)
-  birthday?: Date;
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  passwd: string;
+
+  // @IsDate()
+  // @IsEmpty()
+  // @Type(() => Date)
+  // birthday?: Date;
 }
 //   @IsNotEmpty()
 //   login_id: number;
